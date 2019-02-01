@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>USDA database food search</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <h2>USDA food search</h2>
+    <p>Example:</p>
+    <p><strong>beans,dry-roasted,[garbanzo]</strong></p>
+    <p>returns foods containg "beans","dry-roasted", but not "garbanzo"</p>
+    <p>also do not worry about spaces but plurality matters</p>
+    <div>
+        <input id="search" type="text" placeholder="input your food here..." />
+    </div>
+    <div>
+        <input id="bycalories" type="checkbox" checked value="yes"><label for="bycalories">measured by calories</label>
+    </div>
+    <div>
+        <button id="find" type="submit" type="button">Find</button>
+    </div>
+    <div id="result"></div>
+</body>
+<script src="index.js"></script>
+</html>
