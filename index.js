@@ -3,6 +3,8 @@
     const input = document.querySelector('#search');
     const resultdiv = document.querySelector('#result');
     const calories = document.querySelector('#bycalories');
+    const spinner = document.getElementById("spinner");
+    spinner.style.display = 'none';
 
     function buildHtml(data) {
 
@@ -26,11 +28,12 @@
         var data = request.response;
         var html = buildHtml(data);
         resultdiv.innerHTML = html;
+        spinner.style.display = 'none';
         console.log(obj)
     }
 
     request.onerror = function (obj) {
-
+        spinner.style.display = 'none';
         console.log(obj)
     }
 
@@ -45,5 +48,6 @@
         request.open('GET', requestURL);
         request.responseType = 'json';
         request.send();
+        spinner.style.display = 'block';
     });
 })();
