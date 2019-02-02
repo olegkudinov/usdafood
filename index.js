@@ -50,4 +50,10 @@
         request.send();
         spinner.style.display = 'block';
     });
+
+    button.addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            button.click();
+        }
 })();
