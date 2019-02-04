@@ -25,15 +25,20 @@
 
     const request = new XMLHttpRequest();
     request.onload = function (obj) {
-        var data = request.response;
-        var html = buildHtml(data);
-        resultdiv.innerHTML = html;
         spinner.style.display = 'none';
+        var data = request.response;
+        if(!data || data === null) {
+            resultdiv.innerHTML = "<div><strong>Not Found<strong></div>";
+        } else {
+            var html = buildHtml(data);
+            resultdiv.innerHTML = html;
+        }
         console.log(obj)
     }
 
     request.onerror = function (obj) {
         spinner.style.display = 'none';
+        resultdiv.innerHTML = "<div><strong>Something's wrong<strong></div>";
         console.log(obj)
     }
 
