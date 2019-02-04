@@ -4,36 +4,35 @@
 <head>
     <title>USDA database food search</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
         crossorigin="anonymous">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
     <!--link rel="stylesheet" href="surface_styles.css"-->
     <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
-    <header>
-        <h2 class="center">USDA food search</h2>
-    </header>
-    Example of use: <strong>beans,dry-roasted,[garbanzo]</strong>
-    <div class="g--12 g-s--12">returns foods containg "beans","dry-roasted", but not "garbanzo"</strong></div>
-    <div class="g--12 g-s--12">also do not worry about spaces but plurality matters</strong></div>
-    <input id="search" type="text" autofocus />
-    <div class="container">
-        <div class="g--6 g-s--12">
+    <main class="wrapper">
+        <header class="container">
+            <h2 class="center">USDA food search</h2>
+        </header>
+        <section class="container">
+            Example of use: <strong>potatoes,boiled,-cooked in skin</strong> returns foods containg "potatoes","bolied",
+            but not "cooked in skin"; also do not worry about spaces but plurality matters
+        </section>
+        <section class="container">
+            <input id="search" type="text" autofocus />
             <input id="bycalories" type="checkbox" checked class="toggle">
-        </div>
-        <div class="g--6 g-s--12">
             <label for="bycalories">measured by calories</label>
-        </div>
-    </div>
-    <div class="g--12 g-s--12">
-        <button class="btn--raised btn--red" id="find" type="submit" type="button">Find</button>
-    </div>
-    <div id="spinner">
-        <i class="fas fa-spinner fa-spin"></i>
-    </div>
-    </div>
-    <div id="result"></div>
+            <button id="find" type="submit" type="button">Find</button>
+            <span id="spinner"><i class="fas fa-spinner fa-spin"></i></span>
+        </section>
+        <section class="container" id="result">
+        </section>
+    </main>
 </body>
 <script src="index.js"></script>
 
