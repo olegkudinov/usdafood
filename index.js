@@ -3,8 +3,8 @@
     const input = document.querySelector('#search');
     const resultdiv = document.querySelector('#result');
     const calories = document.querySelector('#bycalories');
-    const spinner = document.getElementById("spinner");
-    spinner.style.display = 'none';
+    const spinner = document.getElementsByClassName("spinner")[0];
+    spinner.className = 'invisible';
 
     function buildHtml(data) {
 
@@ -25,7 +25,7 @@
 
     const request = new XMLHttpRequest();
     request.onload = function (obj) {
-        spinner.style.display = 'none';
+        spinner.className = 'invisible';
         var data = request.response;
         if(!data || data === null) {
             resultdiv.innerHTML = "<div><strong>Not Found<strong></div>";
@@ -37,7 +37,7 @@
     }
 
     request.onerror = function (obj) {
-        spinner.style.display = 'none';
+        spinner.className = 'invisible';
         resultdiv.innerHTML = "<div><strong>Something's wrong<strong></div>";
         console.log(obj)
     }
@@ -53,7 +53,7 @@
         request.open('GET', requestURL);
         request.responseType = 'json';
         request.send();
-        spinner.style.display = 'block';
+        spinner.className = '';
     });
 
     input.addEventListener("keyup", function(event) {
