@@ -10,16 +10,19 @@
 
         let nutrients = '';
         data.nutrients.forEach(element => {
-            nutrients += '<div><span class="nutrient">' + element.nutrient + ': </span><strong>' + element.content.value + ' ' + element.content.unit + '</strong></div>';
+            if (element.nutrient[0] === "*")
+                nutrients += '<div><strong>' + element.nutrient + '</strong>: <strong>' + element.content.value + ' ' + element.content.unit + '</strong></div>';
+            else
+                nutrients += '<div><em>' + element.nutrient + '</em>: <strong>' + element.content.value + ' ' + element.content.unit + '</strong></div>';
         });
 
         let result =
             '<div>' +
             "<div><strong>" + data.foodName + "</strong></div>" +
             "<div><em>Weight:</em><strong> " + data.weight.value + ' ' + data.weight.unit + "</strong></div>" +
-            "<div><em>Energy:</em><strong> "  + data.energy.value + ' ' + data.energy.unit + "</strong></div>" +
+            "<div><em>Energy:</em><strong> " + data.energy.value + ' ' + data.energy.unit + "</strong></div>" +
             "<p>" + nutrients + "</p>";
-            '</div>';
+        '</div>';
         return result;
     }
 
@@ -27,7 +30,7 @@
     request.onload = function (obj) {
         spinner.className = 'invisible';
         var data = request.response;
-        if(!data || data === null) {
+        if (!data || data === null) {
             resultdiv.innerHTML = "<div><strong>Not Found<strong></div>";
         } else {
             var html = buildHtml(data);
@@ -48,15 +51,15 @@
             command = 'c';
         let search = command + ',' + input.value;
 
-        let requestURL = 'https://oktstdevusda.azurewebsites.net/api/nutrients/' + search;
-        //let requestURL = 'https://localhost:44392/api/nutrients/' + search;
+        //let requestURL = 'https://oktstdevusda.azurewebsites.net/api/nutrients/' + search;
+        let requestURL = 'https://localhost:44392/api/nutrients/' + search;
         request.open('GET', requestURL);
         request.responseType = 'json';
         request.send();
         spinner.className = '';
     });
 
-    input.addEventListener("keyup", function(event) {
+    input.addEventListener("keyup", function (event) {
         event.preventDefault();
         if (event.keyCode === 13) {
             button.click();
