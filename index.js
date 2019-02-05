@@ -51,8 +51,8 @@
             command = 'c';
         let search = command + ',' + input.value;
 
-        //let requestURL = 'https://oktstdevusda.azurewebsites.net/api/nutrients/' + search;
-        let requestURL = 'https://localhost:44392/api/nutrients/' + search;
+        let requestURL = 'https://oktstdevusda.azurewebsites.net/api/nutrients/' + search;
+        //let requestURL = 'https://localhost:44392/api/nutrients/' + search;
         request.open('GET', requestURL);
         request.responseType = 'json';
         request.send();
