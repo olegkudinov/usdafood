@@ -10,9 +10,12 @@
 
         let nutrients = '';
         data.nutrients.forEach(element => {
-            if (element.nutrient[0] === "*")
-                nutrients += '<div><strong>' + element.nutrient + '</strong>: <strong>' + element.content.value + ' ' + element.content.unit + '</strong></div>';
-            else
+            if (element.nutrient[0] === "*") {
+                if (element.content.unit !== "header")
+                    nutrients += '<div><strong>' + element.nutrient + '</strong>: <strong>' + element.content.value + ' ' + element.content.unit + '</strong></div>';
+                else
+                    nutrients += '<div><strong>' + element.nutrient + '</strong></div>';
+            } else
                 nutrients += '<div><em>' + element.nutrient + '</em>: <strong>' + element.content.value + ' ' + element.content.unit + '</strong></div>';
         });
 
