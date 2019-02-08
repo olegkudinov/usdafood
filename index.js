@@ -3,8 +3,8 @@ const input = document.querySelector('#search');
 const resultdiv = document.querySelector('#result');
 const calories = document.querySelector('#bycalories');
 const spinner = document.getElementsByClassName("spinner")[0];
-const _baseUrl = 'https://localhost:44392';
-//let _baseUrl = 'https://oktstdevusda.azurewebsites.net';
+//const _baseUrl = 'https://localhost:44392';
+const _baseUrl = 'https://oktstdevusda.azurewebsites.net';
 
 spinner.className = 'invisible';
 
