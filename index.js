@@ -5,8 +5,8 @@ const calories = document.querySelector('#bycalories');
 const spinner = document.getElementsByClassName("spinner")[0];
 const btncaption = document.getElementById("btncaption");
 
-//const _baseUrl = 'https://localhost:44392';
-const _baseUrl = 'https://oktstdevusda.azurewebsites.net';
+const _baseUrl = 'https://localhost:44392';
+//const _baseUrl = 'https://oktstdevusda.azurewebsites.net';
 
 spinner.className = 'invisible';
 
@@ -56,10 +56,11 @@ function buildNutientHtml(data, bycalories) {
 function buildFoodHtml(data) {
     let foodHtml = '';
     data.forEach(element => {
+        let id = element.id
         foodHtml += `
                 <tr>
                     <td>` + element.name + `</td>
-                    <td><button onclick='getNutrientsFor(` + element.id + `)'>Nutrients</button></td>
+                    <td><button onclick='getNutrientsFor("` + id  + `")'>Nutrients</button></td>
                 </tr>`;
     });
     let result = `
@@ -125,7 +126,7 @@ button.addEventListener('click', function () {
     foodRequest.responseType = 'json';
     foodRequest.send();
     spinner.className = '';
-s});
+});
 
 input.addEventListener("keyup", function (event) {
     event.preventDefault();
