@@ -3,6 +3,8 @@ const input = document.querySelector('#search');
 const resultdiv = document.querySelector('#result');
 const calories = document.querySelector('#bycalories');
 const spinner = document.getElementsByClassName("spinner")[0];
+const btncaption = document.getElementById("btncaption");
+
 //const _baseUrl = 'https://localhost:44392';
 const _baseUrl = 'https://oktstdevusda.azurewebsites.net';
 
@@ -73,11 +75,12 @@ function buildFoodHtml(data) {
     return result;
 }
 
-const request = new XMLHttpRequest();
+const foodRequest = new XMLHttpRequest();
 
-request.onload = function (obj) {
+foodRequest.onload = function (obj) {
+    btncaption.innerText = "Find";
     spinner.className = 'invisible';
-    let data = request.response;
+    let data = foodRequest.response;
     if (!data || data === null || data.length === 0) {
         resultdiv.innerHTML = "<div><strong>Not Found<strong></div>";
     } else {
@@ -87,17 +90,19 @@ request.onload = function (obj) {
     console.log(obj)
 }
 
-request.onerror = function (obj) {
+foodRequest.onerror = function (obj) {
+    btncaption.innerText = "Find";
     spinner.className = 'invisible';
     resultdiv.innerHTML = "<div><strong>Something's wrong<strong></div>";
     console.log(obj)
 }
 
-const request2 = new XMLHttpRequest();
+const nutrientRequest = new XMLHttpRequest();
 
-request2.onload = function (obj) {
+nutrientRequest.onload = function (obj) {
+    btncaption.innerText = "Back";
     spinner.className = 'invisible';
-    let data = request2.response;
+    let data = nutrientRequest.response;
     if (!data || data === null) {
         resultdiv.innerHTML = "<div><strong>Not Found<strong></div>";
     } else {
@@ -107,7 +112,8 @@ request2.onload = function (obj) {
     console.log(obj)
 }
 
-request2.onerror = function (obj) {
+nutrientRequest.onerror = function (obj) {
+    btncaption.innerHTML = "Back";
     spinner.className = 'invisible';
     resultdiv.innerHTML = "<div><strong>Something's wrong<strong></div>";
     console.log(obj)
@@ -115,11 +121,11 @@ request2.onerror = function (obj) {
 
 button.addEventListener('click', function () {
     let requestURL = _baseUrl + '/api/foods/' + input.value;;
-    request.open('GET', requestURL);
-    request.responseType = 'json';
-    request.send();
+    foodRequest.open('GET', requestURL);
+    foodRequest.responseType = 'json';
+    foodRequest.send();
     spinner.className = '';
-});
+s});
 
 input.addEventListener("keyup", function (event) {
     event.preventDefault();
@@ -133,8 +139,8 @@ function getNutrientsFor(id) {
     if (calories.checked)
         command = 'c';
     let requestURL = _baseUrl + '/api/nutrients/' + command + ',' + id;
-    request2.open('GET', requestURL);
-    request2.responseType = 'json';
-    request2.send();
+    nutrientRequest.open('GET', requestURL);
+    nutrientRequest.responseType = 'json';
+    nutrientRequest.send();
     spinner.className = '';
 }
