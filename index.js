@@ -34,7 +34,7 @@ function buildNutientHtml(data, bycalories) {
     if(bycalories) {
         totals = `
         <div><em>Energy:</em><strong> ` + data.energy.value + ` ` + data.energy.unit + `</strong></div>
-        div><em>Weight:</em><strong> ` + data.weight.value + ` ` + data.weight.unit + `</strong></div>`;
+        <div><em>Weight:</em><strong> ` + data.weight.value + ` ` + data.weight.unit + `</strong></div>`;
     }
 
     let result = `
@@ -107,7 +107,7 @@ nutrientRequest.onload = function (obj) {
     if (!data || data === null) {
         resultdiv.innerHTML = "<div><strong>Not Found<strong></div>";
     } else {
-        var html = buildNutientHtml(data);
+        var html = buildNutientHtml(data, calories.checked);
         resultdiv.innerHTML = html;
     }
     console.log(obj)
@@ -120,12 +120,15 @@ nutrientRequest.onerror = function (obj) {
     console.log(obj)
 }
 
-button.addEventListener('click', function () {
-    let requestURL = _baseUrl + '/api/foods/' + input.value;;
-    foodRequest.open('GET', requestURL);
-    foodRequest.responseType = 'json';
-    foodRequest.send();
+function startRequest(request, url) {
+    request.open('GET', url);
+    request.responseType = 'json';
+    request.send();
     spinner.className = '';
+}
+
+button.addEventListener('click', function () {
+    startRequest(foodRequest, _baseUrl + '/api/foods/' + input.value);
 });
 
 input.addEventListener("keyup", function (event) {
@@ -139,9 +142,5 @@ function getNutrientsFor(id) {
     let command = 'w';
     if (calories.checked)
         command = 'c';
-    let requestURL = _baseUrl + '/api/nutrients/' + command + ',' + id;
-    nutrientRequest.open('GET', requestURL);
-    nutrientRequest.responseType = 'json';
-    nutrientRequest.send();
-    spinner.className = '';
+    startRequest(nutrientRequest, _baseUrl + '/api/nutrients/' + command + ',' + id);
 }
