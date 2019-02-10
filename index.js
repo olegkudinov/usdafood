@@ -8,6 +8,7 @@ let app = (function (window) {
 
     //const _baseUrl = 'https://localhost:44392';
     const _baseUrl = 'https://oktstdevusda.azurewebsites.net';
+    let _startUrl = window.location.href;
 
     spinner.className = 'invisible';
 
@@ -121,23 +122,30 @@ let app = (function (window) {
         console.log(obj)
     }
 
-    function startRequest(requestKind, url, push) {
+    function startRequest(url, push) {
         if (push)
-            window.history.pushState({ Url: url, Request: requestKind }, "search", url);
-        let request = requestKind === 'nutrient' ? nutrientRequest : foodRequest;
-        request.open('GET', _baseUrl + url);
-        request.responseType = 'json';
-        request.send();
-        spinner.className = '';
+            window.history.pushState({ Url: url }, "search", url);
+        if (url == '') {
+            window.location = _startUrl;
+        }
+        else {
+            let request = url.startsWith('/api/nutrients/') ? nutrientRequest : foodRequest;
+            request.open('GET', _baseUrl + url);
+            request.responseType = 'json';
+            request.send();
+            spinner.className = '';
+        }
     }
 
     window.onpopstate = function (evt) {
         if (evt.state)
-            startRequest(evt.state.Request, evt.state.Url, false);
+            startRequest(evt.state.Url, false);
+        else
+            startRequest('', false);
     };
 
     button.addEventListener('click', function () {
-        startRequest('food', '/api/foods/' + input.value, true);
+        startRequest('/api/foods/' + input.value, true);
     });
 
     input.addEventListener("keyup", function (event) {
@@ -151,7 +159,7 @@ let app = (function (window) {
         let command = 'w';
         if (calories.checked)
             command = 'c';
-        startRequest('nutrient', '/api/nutrients/' + command + ',' + id, true);
+        startRequest('/api/nutrients/' + command + ',' + id, true);
     };
 
     return {
