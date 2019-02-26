@@ -5,10 +5,13 @@ let app = (function (window) {
     const calories = document.querySelector('#bycalories');
     const spinner = document.getElementsByClassName("spinner")[0];
     const btncaption = document.getElementById("btncaption");
+    const multiplier = document.querySelector('#multiplier');
 
     //const _baseUrl = 'https://localhost:44392';
     const _baseUrl = 'https://oktstdevusda.azurewebsites.net';
     let _startUrl = window.location.href;
+
+    let _factor = 1;
 
     spinner.className = 'invisible';
 
@@ -22,21 +25,21 @@ let app = (function (window) {
             if (header && unitless) {
                 row = '<tr><td colspan="3"><strong>' + element.nutrient + '</strong></td></tr>'
             } else if (header) {
-                row = '<tr><td><strong>' + element.nutrient + '</strong></td><td><strong>' + element.content.value + '</strong></td><td><strong>' + element.content.unit + '</strong></td></tr>';
+                row = '<tr><td><strong>' + element.nutrient + '</strong></td><td><strong>' + element.content.value * _factor + '</strong></td><td><strong>' + element.content.unit + '</strong></td></tr>';
             } else {
-                row = '<tr><td><em>' + element.nutrient + '</em></td><td><strong>' + element.content.value + '</strong></td><td><strong>' + element.content.unit + '</strong></td></tr>';
+                row = '<tr><td><em>' + element.nutrient + '</em></td><td><strong>' + element.content.value * _factor + '</strong></td><td><strong>' + element.content.unit + '</strong></td></tr>';
             }
             nutrients += row;
         });
 
         let totals = `
-        <div><em>Weight:</em><strong> ` + data.weight.value + ` ` + data.weight.unit + `</strong></div>
-        <div><em>Energy:</em><strong> ` + data.energy.value + ` ` + data.energy.unit + `</strong></div>`;
+        <div><em>Weight:</em><strong> ` + data.weight.value * _factor + ` ` + data.weight.unit + `</strong></div>
+        <div><em>Energy:</em><strong> ` + data.energy.value * _factor + ` ` + data.energy.unit + `</strong></div>`;
 
         if (bycalories) {
             totals = `
-        <div><em>Energy:</em><strong> ` + data.energy.value + ` ` + data.energy.unit + `</strong></div>
-        <div><em>Weight:</em><strong> ` + data.weight.value + ` ` + data.weight.unit + `</strong></div>`;
+        <div><em>Energy:</em><strong> ` + data.energy.value * _factor + ` ` + data.energy.unit + `</strong></div>
+        <div><em>Weight:</em><strong> ` + data.weight.value * _factor + ` ` + data.weight.unit + `</strong></div>`;
         }
 
         let result = `
@@ -153,6 +156,12 @@ let app = (function (window) {
         if (event.keyCode === 13) {
             button.click();
         }
+    });
+
+    multiplier.addEventListener('click', function () {
+        if(++_factor > 10)
+            _factor = 1;
+        multiplier.innerText = "x " + _factor;
     });
 
     _getNutrientsFor = function (id) {
