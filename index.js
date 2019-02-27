@@ -12,12 +12,14 @@ let app = (function (window) {
     let _startUrl = window.location.href;
 
     let _factor = 1;
+    let _lastResult = null;
 
     spinner.className = 'invisible';
 
     function buildNutientHtml(data, bycalories) {
 
         let nutrients = '';
+        _lastResult = data;
         data.nutrients.forEach(element => {
             let header = element.nutrient[0] === "*";
             let unitless = element.content.unit === "header";
@@ -162,6 +164,17 @@ let app = (function (window) {
         if(++_factor > 10)
             _factor = 1;
         multiplier.innerText = "x " + _factor;
+        if(_lastResult) {
+            var html = buildNutientHtml(_lastResult, calories.checked);
+            resultdiv.innerHTML = html;
+        }
+    });
+
+    calories.addEventListener('click', function () {
+        if(_lastResult) {
+            var html = buildNutientHtml(_lastResult, calories.checked);
+            resultdiv.innerHTML = html;
+        }
     });
 
     _getNutrientsFor = function (id) {
