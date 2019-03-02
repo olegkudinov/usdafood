@@ -16,6 +16,10 @@ let app = (function (window) {
 
     spinner.className = 'invisible';
 
+    function fmt(value){
+        return Math.round(value * 100)/100;
+    }
+
     function buildNutientHtml(data) {
 
         let _factorCaption = "x " + _mfactor;
@@ -32,24 +36,24 @@ let app = (function (window) {
             if (header && unitless) {
                 row = '<tr><td colspan="2"><strong>' + element.nutrient.replace('**', '').replace('**', '') + '</strong></td></tr>'
             } else if (header) {
-                row = '<tr><td><strong>' + element.nutrient.replace('**', '').replace('**', '') + '</strong></td><td><strong>' + Math.round(element.content.value * factor) + '</strong>&nbsp;<strong>' + element.content.unit + '</strong></td></tr>';
+                row = '<tr><td><strong>' + element.nutrient.replace('**', '').replace('**', '') + '</strong></td><td><strong>' + fmt(element.content.value * factor) + '</strong>&nbsp;<strong>' + element.content.unit + '</strong></td></tr>';
             } else {
-                row = '<tr><td><em>' + element.nutrient + '</em></td><td><strong>' + Math.round(element.content.value * factor) + '</strong>&nbsp;<strong>' + element.content.unit + '</strong></td></tr>';
+                row = '<tr><td><em>' + element.nutrient + '</em></td><td><strong>' + fmt(element.content.value * factor) + '</strong>&nbsp;<strong>' + element.content.unit + '</strong></td></tr>';
             }
             nutrients += row;
         });
 
-        var weight = _weightUS ? data.weight.value / 3.5274 : data.weight.value;
+        var weight = _weightUS ? data.weight.value / 100 * 3.5274 : data.weight.value;
         var wunit = _weightUS ? 'oz' : data.weight.unit;
 
         let totals = `
-        <div><em>Weight:</em><strong> ` + Math.round(weight * factor) + ` ` + wunit + `</strong></div>
-        <div><em>Energy:</em><strong> ` + Math.round(data.energy.value * factor) + ` ` + data.energy.unit + `</strong></div>`;
+        <div><em>Weight:</em><strong> ` + fmt(weight * factor) + ` ` + wunit + `</strong></div>
+        <div><em>Energy:</em><strong> ` + fmt(data.energy.value * factor) + ` ` + data.energy.unit + `</strong></div>`;
 
         if (_byCalories) {
             totals = `
-        <div><em>Energy:</em><strong> ` + Math.round(data.energy.value * factor) + ` ` + data.energy.unit + `</strong></div>
-        <div><em>Weight:</em><strong> ` + Math.round(weight * factor) + ` ` + wunit + `</strong></div>`;
+        <div><em>Energy:</em><strong> ` + fmt(data.energy.value * factor) + ` ` + data.energy.unit + `</strong></div>
+        <div><em>Weight:</em><strong> ` + fmt(weight * factor) + ` ` + wunit + `</strong></div>`;
         }
 
         const result = `
