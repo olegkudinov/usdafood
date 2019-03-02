@@ -9,8 +9,8 @@ let app = (function (window) {
     const _baseUrl = 'https://oktstdevusda.azurewebsites.net';
     let _startUrl = window.location.href;
 
-    let _mfactor = 1;
     let _lastResult = null;
+    let _mfactor = 1;
     let _byCalories = true;
     let _weightUS = true;
 
@@ -20,7 +20,7 @@ let app = (function (window) {
 
         let _factorCaption = "x " + _mfactor;
         let _baseCaption = _byCalories ? "By Calories" : "By Weight";
-        let _weightCaption = _weightUS ? "US Weight" : "Metric Weight";
+        let _weightCaption = _weightUS ? "US Weight" : "Metric";
     
         let factor = (_byCalories ? 100.0 / data.energy.value : 1.0) * _mfactor;
         let nutrients = '';
@@ -30,16 +30,16 @@ let app = (function (window) {
             let unitless = element.content.unit === "header";
             let row = '';
             if (header && unitless) {
-                row = '<tr><td colspan="3"><strong>' + element.nutrient.replace('**', '').replace('**', '') + '</strong></td></tr>'
+                row = '<tr><td colspan="2"><strong>' + element.nutrient.replace('**', '').replace('**', '') + '</strong></td></tr>'
             } else if (header) {
-                row = '<tr><td><strong>' + element.nutrient.replace('**', '').replace('**', '') + '</strong></td><td><strong>' + Math.round(element.content.value * factor) + '</strong></td><td><strong>' + element.content.unit + '</strong></td></tr>';
+                row = '<tr><td><strong>' + element.nutrient.replace('**', '').replace('**', '') + '</strong></td><td><strong>' + Math.round(element.content.value * factor) + '</strong>&nbsp;<strong>' + element.content.unit + '</strong></td></tr>';
             } else {
-                row = '<tr><td><em>' + element.nutrient + '</em></td><td><strong>' + Math.round(element.content.value * factor) + '</strong></td><td><strong>' + element.content.unit + '</strong></td></tr>';
+                row = '<tr><td><em>' + element.nutrient + '</em></td><td><strong>' + Math.round(element.content.value * factor) + '</strong>&nbsp;<strong>' + element.content.unit + '</strong></td></tr>';
             }
             nutrients += row;
         });
 
-        var weight = _weightUS ? data.weight.value * 3.5274 : data.weight.value;
+        var weight = _weightUS ? data.weight.value / 3.5274 : data.weight.value;
         var wunit = _weightUS ? 'oz' : data.weight.unit;
 
         let totals = `
@@ -66,7 +66,6 @@ let app = (function (window) {
             <thead>
                 <th>Nutrition</th>
                 <th>Content</th>
-                <th>Unit</th>
             </thead>
             <tbody>` +
             nutrients + `
