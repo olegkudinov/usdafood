@@ -54,10 +54,12 @@ let app = (function (window) {
 
         const result = `
         <div>
-        <strong>` + data.foodName + `&nbsp;&nbsp;&nbsp;</strong>
-        <button id='toggler' onclick='app.toggleBase()'>` + _baseCaption + `</button>
-        <button id='multiplier' onclick='app.multiply()'>` + _factorCaption + `</button>
-        <button id='weight' onclick='app.toggleWeight()'>` + _weightCaption + `</button>
+           <strong>` + data.foodName + `&nbsp;&nbsp;&nbsp;</strong>
+        </div>
+        <div>
+           <button id='toggler' onclick='app.toggleBase()'>` + _baseCaption + `</button>
+           <button id='multiplier' onclick='app.multiply()'>` + _factorCaption + `</button>
+           <button id='weight' onclick='app.toggleWeight()'>` + _weightCaption + `</button>
         </div>`
             + totals + `
         <table>
