@@ -200,7 +200,7 @@ let app = (function (window) {
     };
 
     _getNutrientsFor = function (id) {
-        startRequest('/api/nutrients/w,' + id, true);
+        startRequest('/api/nutrients/' + id, true);
     };
 
     return {
