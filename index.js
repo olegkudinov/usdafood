@@ -12,7 +12,6 @@ let app = (function (window) {
     let _lastResult = null;
     let _mfactor = 1;
     let _byCalories = true;
-    let _weightUS = true;
 
     spinner.className = 'invisible';
 
@@ -22,9 +21,8 @@ let app = (function (window) {
 
     function buildNutientHtml(data) {
 
-        let _factorCaption = "x " + _mfactor;
-        let _baseCaption = _byCalories ? "By Calories" : "By Weight";
-        let _weightCaption = _weightUS ? "US Weight" : "Metric";
+        let _factorCaption = "x " + (_mfactor == 10 ? 1 : _mfactor + 1);
+        let _baseCaption = _byCalories ? "By Weight" : "By Calories";
     
         let factor = (_byCalories ? 100.0 / data.energy.value : 1.0) * _mfactor;
         let nutrients = '';
@@ -43,17 +41,17 @@ let app = (function (window) {
             nutrients += row;
         });
 
-        var weight = _weightUS ? data.weight.value / 100 * 3.5274 : data.weight.value;
-        var wunit = _weightUS ? 'oz' : data.weight.unit;
+        var weightUS = data.weight.value / 100 * 3.5274;
+        var weightStr = fmt(data.weight.value * factor) + '&nbsp;' + data.weight.unit + '&nbsp;/&nbsp;' + fmt(weightUS * factor) + '&nbsp;oz';
 
         let totals = `
-        <div><em>Weight:</em><strong> ` + fmt(weight * factor) + ` ` + wunit + `</strong></div>
+        <div><em>Weight:</em><strong> ` + weightStr + `</strong></div>
         <div><em>Energy:</em><strong> ` + fmt(data.energy.value * factor) + ` ` + data.energy.unit + `</strong></div>`;
 
         if (_byCalories) {
             totals = `
         <div><em>Energy:</em><strong> ` + fmt(data.energy.value * factor) + ` ` + data.energy.unit + `</strong></div>
-        <div><em>Weight:</em><strong> ` + fmt(weight * factor) + ` ` + wunit + `</strong></div>`;
+        <div><em>Weight:</em><strong> ` + weightStr + `</strong></div>`;
         }
 
         const result = `
@@ -63,7 +61,6 @@ let app = (function (window) {
         <div>
            <button id='toggler' onclick='app.toggleBase()'>` + _baseCaption + `</button>
            <button id='multiplier' onclick='app.multiply()'>` + _factorCaption + `</button>
-           <button id='weight' onclick='app.toggleWeight()'>` + _weightCaption + `</button>
         </div>`
             + totals + `
         <table>
@@ -194,11 +191,6 @@ let app = (function (window) {
         updateView();
     };
 
-    _toggleWeight = function () {
-        _weightUS = !_weightUS;
-        updateView();
-    };
-
     _getNutrientsFor = function (id) {
         startRequest('/api/nutrients/' + id, true);
     };
@@ -207,6 +199,5 @@ let app = (function (window) {
         getNutrientsFor: _getNutrientsFor,
         multiply: _multiply,
         toggleBase: _toggleBase,
-        toggleWeight: _toggleWeight
     }
 }(this));
