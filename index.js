@@ -7,7 +7,8 @@ let app = (function (window) {
     spinner.className = 'invisible';
 
     //const _baseUrl = 'https://localhost:44392';
-    const _baseUrl = 'https://oktstdevusda.azurewebsites.net';
+    const _baseUrl = 'https://okdev-test-usda.azurewebsites.net';
+
     const _homeUrl = window.location.href;
 
     let _lastResult = null;

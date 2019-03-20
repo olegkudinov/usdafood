@@ -21,6 +21,7 @@ function Templates(resultElement) {
             } else {
                 row = '<tr><td><em>' + element.nutrient + '</em></td><td><strong>' + _fmt(element.content.value * factor) + '</strong>&nbsp;<strong>' + element.content.unit + '</strong></td></tr>';
             }
+            
             nutrients += row;
         });
     
