@@ -3,6 +3,8 @@ let app = (function (window) {
     const input = document.querySelector('#search');
     const button = document.querySelector('#find');
     const resultdiv = document.querySelector('#result');
+    const voice  = document.querySelector('#voice');
+    const playback = document.querySelector('#playback');
     const spinner = document.getElementsByClassName("spinner")[0];
     spinner.className = 'invisible';
 
@@ -82,6 +84,12 @@ let app = (function (window) {
     _getNutrientsFor = function (id) {
         startRequest('/api/nutrients/' + id, true);
     };
+
+    const _speech = new Speech({
+        recordBtn: voice,
+        audio: playback
+    });
+    _speech.startListen();
 
     return {
         getNutrientsFor: _getNutrientsFor,
