@@ -22,11 +22,14 @@
         <section class="container">
             <div class="row">
                 <input id="search" type="text" autofocus />&nbsp;
-                <button id="voice" type="button">Talk</button>
-                    <audio id="playback" controls></audio>
+                <!--<button id="voice" type="button">Talk</button>
+                    <audio id="playback" controls></audio>-->
+            </div>
+            <div class="row">
             </div>
             <div class="row">
                 <button id="find" type="submit" type="button">&nbsp;&nbsp;&nbsp;&nbsp;<span id="btncaption">Find</span>&nbsp;<span class="spinner"><i class="fas fa-spinner fa-spin"></i></span></button>
+                <small>&nbsp;Eg.: <em><strong>potatoes,boiled,-cooked in skin</strong></em> includes "potatoes","bolied", but not "cooked in skin"</small>
             </div>
         </section>
         <section class="container" id="result">
@@ -37,7 +40,7 @@
 <script src="underscore-min.js"></script>
 <script src="request.js"></script>
 <script src="templates.js"></script>
-<script src="speech.js"></script>
+<!--<script src="speech.js"></script>-->
 <script src="index.js"></script>
 
 </html>
