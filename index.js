@@ -85,11 +85,13 @@ let app = (function (window) {
         startRequest('/api/nutrients/' + id, true);
     };
 
+    /*
     const _speech = new Speech({
         recordBtn: voice,
         audio: playback
     });
     _speech.startListen();
+    */
 
     return {
         getNutrientsFor: _getNutrientsFor,
