@@ -4,10 +4,24 @@ function Templates(resultElement) {
         return Math.round(value * 100)/100;
     }
 
-    let _buildNutientHtml = function (data, mutiplicator, byCalories) {
+    let _buildNutientHtml = function (data, mutiplicator, measure) {
         let _factorCaption = "x " + (mutiplicator == 10 ? 1 : mutiplicator + 1);
-        let _baseCaption = byCalories ? "By Weight" : "By Calories";
-        let factor = (byCalories ? 100.0 / data.energy.value : 1.0) * mutiplicator;
+        const byCalories = measure === 'calories';
+        const byOunces = measure === 'ounces';
+        let _baseCaption;
+        if(byCalories)
+            _baseCaption = 'By Calories';
+        else if(byOunces)
+            _baseCaption = 'By Ounces';
+        else 
+            _baseCaption = 'By Grams';
+
+        // original measure in 100 grams
+        let factor = mutiplicator;
+        if(byCalories)
+            factor *= 100.0 / data.energy.value;
+        else if(byOunces) 
+            factor *= 3 / 3.527396;
         
         let nutrients = '';
         data.nutrients.forEach(element => {
@@ -25,8 +39,11 @@ function Templates(resultElement) {
             nutrients += row;
         });
     
-        var weightUS = data.weight.value / 100 * 3.5274;
-        var weightStr = _fmt(data.weight.value * factor) + '&nbsp;' + data.weight.unit + '&nbsp;/&nbsp;' + _fmt(weightUS * factor) + '&nbsp;oz';
+        const weightUS = data.weight.value / 100 * 3.5274;
+        let weightStr = _fmt(data.weight.value * factor) + '&nbsp;' + data.weight.unit + '&nbsp;/&nbsp;' + _fmt(weightUS * factor) + '&nbsp;oz';
+        if (byOunces) {
+            weightStr = _fmt(weightUS * factor) + '&nbsp;oz' + '&nbsp;/&nbsp;' + _fmt(data.weight.value * factor) + data.weight.unit; 
+        }
     
         let totals = `
         <div><em>Weight:</em><strong> ` + weightStr + `</strong></div>
@@ -37,6 +54,7 @@ function Templates(resultElement) {
         <div><em>Energy:</em><strong> ` + _fmt(data.energy.value * factor) + ` ` + data.energy.unit + `</strong></div>
         <div><em>Weight:</em><strong> ` + weightStr + `</strong></div>`;
         }
+        
     
         const result = `
         <div>

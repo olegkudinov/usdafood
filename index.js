@@ -15,7 +15,7 @@ let app = (function (window) {
 
     let _lastResult = null;
     let _mfactor = 1;
-    let _byCalories = true;
+    let _measure = 'calories';
 
     const _templates = new Templates(resultdiv);
     
@@ -33,7 +33,7 @@ let app = (function (window) {
                 _templates.foods(data);
             else {
                 _lastResult = data;
-                _templates.nutrition(data, _mfactor, _byCalories);
+                _templates.nutrition(data, _mfactor, _measure);
             }
         }
     }); 
@@ -67,7 +67,7 @@ let app = (function (window) {
 
     function updateView(){
         if(_lastResult) 
-        _templates.nutrition(_lastResult, _mfactor, _byCalories);
+        _templates.nutrition(_lastResult, _mfactor, _measure);
     }
 
     _multiply = function () {
@@ -77,7 +77,12 @@ let app = (function (window) {
     };
 
     _toggleBase = function () {
-        _byCalories = !_byCalories;
+        if(_measure === "calories")
+            _measure = "grams";
+        else if(_measure == "grams")
+            _measure = "ounces";
+        else if(_measure === "ounces")
+            _measure = "calories";
         updateView();
     };
 
