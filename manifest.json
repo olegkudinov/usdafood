@@ -1,7 +1,7 @@
 {
     "name": "USDA Food Search",
     "short_name": "Food",
-    "start_url": "/?utm_source=a2hs",
+    "start_url": "/usdafood/index.html",
     "display": "standalone",
     "background_color": "#FFE9D2", 
     "theme_color": "#FFE1C4",
