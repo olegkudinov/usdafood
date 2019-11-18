@@ -1,4 +1,10 @@
-let app = (function (window) {
+if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('sw is registered', reg))
+        .catch(err => console.log('sw registration failed', err));
+}
+
+const app = (function (window) {
     
     const input = document.querySelector('#search');
     const button = document.querySelector('#find');
