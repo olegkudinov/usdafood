@@ -1,8 +1,24 @@
 if('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
+    navigator.serviceWorker.register('usdafood/sw.js')
         .then(reg => console.log('sw is registered', reg))
         .catch(err => console.log('sw registration failed', err));
 }
+
+let captureInstallEvent;
+
+const installButton = document.querySelector("#install");
+
+installButton.addEventListener('click', evt => {
+    evt.preventDefault();
+    captureInstallEvent.prompt();
+    captureInstallEvent.userChoice.then(choice => console.log('installation - user choice', choice));
+});
+
+window.addEventListener('beforeinstallprompt', evt => {
+    evt.preventDefault();
+    installButton.classList.remove('invisible');
+    captureInstallEvent = evt;
+});
 
 const app = (function (window) {
     
