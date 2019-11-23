@@ -1,25 +1,3 @@
-if('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/usdafood/sw.js')
-        .then(reg => console.log('sw is registered', reg))
-        .catch(err => console.log('sw registration failed', err));
-}
-
-let captureInstallEvent;
-
-const installButton = document.querySelector("#install");
-
-installButton.addEventListener('click', evt => {
-    evt.preventDefault();
-    captureInstallEvent.prompt();
-    captureInstallEvent.userChoice.then(choice => console.log('installation - user choice', choice));
-});
-
-window.addEventListener('beforeinstallprompt', evt => {
-    evt.preventDefault();
-    installButton.classList.remove('invisible');
-    captureInstallEvent = evt;
-});
-
 const app = (function (window) {
     
     const input = document.querySelector('#search');
@@ -39,9 +17,9 @@ const app = (function (window) {
     let _mfactor = 1;
     let _measure = 'calories';
 
-    const _templates = new Templates(resultdiv);
+    const _formatter = new Formatters(resultdiv);
     
-    const _request = new Request({
+    const _requester = new Request({
         rootUrl: _homeUrl,
         baseUrl: _baseUrl,
         onStart: () => spinner.className = '',
@@ -52,64 +30,46 @@ const app = (function (window) {
             else if(!data || data === null || data.length === 0)
                 resultdiv.innerHTML = "<div><strong>Not Found<strong></div>";
             else if (url.startsWith(_baseUrl + '/api/foods/'))
-                _templates.foods(data);
+                _formatter.foods(data);
             else {
                 _lastResult = data;
-                _templates.nutrition(data, _mfactor, _measure);
+                _formatter.nutrition(data, _mfactor, _measure);
             }
         }
     }); 
 
-    function startRequest(url, history) {
+    const _startRequest = (url, history) => {
         if (history)
             window.history.pushState({ Url: url }, "search", url);
         if (url == '')
             window.location = _homeUrl;
         else 
-            _request.get(_baseUrl + url);
-    }
-
-    window.onpopstate = function (evt) {
-        if (evt.state)
-            startRequest(evt.state.Url, false);
-        else
-            startRequest('', false);
+            _requester.get(_baseUrl + url);
     };
 
-    button.addEventListener('click', function () {
-        startRequest('/api/foods/' + input.value, true);
-    });
-
-    input.addEventListener("keyup", function (event) {
-        event.preventDefault();
-        if (event.keyCode === 13) {
-            button.click();
-        }
-    });
-
-    function updateView(){
+    const _updateView = () => {
         if(_lastResult) 
-        _templates.nutrition(_lastResult, _mfactor, _measure);
-    }
+        _formatter.nutrition(_lastResult, _mfactor, _measure);
+    };
 
-    _multiply = function () {
+    const _multiply = function () {
         if(++_mfactor > 10)
             _mfactor = 1;
-        updateView();
+        _updateView();
     };
 
-    _toggleBase = function () {
+    const _toggleBase = () => {
         if(_measure === "calories")
             _measure = "grams";
         else if(_measure == "grams")
             _measure = "ounces";
         else if(_measure === "ounces")
             _measure = "calories";
-        updateView();
+        _updateView();
     };
 
-    _getNutrientsFor = function (id) {
-        startRequest('/api/nutrients/' + id, true);
+    const _getNutrientsFor = id => {
+        _startRequest('/api/nutrients/' + id, true);
     };
 
     /*
@@ -119,6 +79,24 @@ const app = (function (window) {
     });
     _speech.startListen();
     */
+
+   window.onpopstate = function (evt) {
+    if (evt.state)
+        _startRequest(evt.state.Url, false);
+    else
+        _startRequest('', false);
+    };
+
+    button.addEventListener('click', function () {
+        _startRequest('/api/foods/' + input.value, true);
+    });
+
+    input.addEventListener("keyup", function (event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            button.click();
+        }
+    });
 
     return {
         getNutrientsFor: _getNutrientsFor,

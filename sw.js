@@ -1,4 +1,4 @@
-const version = 3;
+const version = 4;
 const staticCacheName = 'sitecache-static' + version;
 const dynamicCacheName = 'sitecache-dynamic' + version;
 
@@ -13,7 +13,7 @@ const assets = [
     "/usdafood/css/index.css",
     "/usdafood/js/underscore-min.js",
     "/usdafood/js/request.js",
-    "/usdafood/js/templates.js",
+    "/usdafood/js/formatter.js",
     "/usdafood/js/app.js"
 ];
 
