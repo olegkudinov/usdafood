@@ -22,7 +22,7 @@ const limitCache = (name, size) => {
         cache.keys().then(keys => {        
             if(keys.length > size) {
                 cache.delete(keys[0]).then(
-                    limitCacheSize(name, size));
+                  limitCache(name, size));
             }
         });
     });
