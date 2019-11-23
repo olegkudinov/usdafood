@@ -69,7 +69,7 @@ const app = (function (window) {
     };
 
     const _getNutrientsFor = id => {
-        _startRequest('/api/nutrients/' + id, true);
+        _startRequest('/api/nutrients/' + id, false);
     };
 
     /*
