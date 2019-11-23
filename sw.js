@@ -1,4 +1,4 @@
-const version = 2;
+const version = 3;
 const staticCacheName = 'sitecache-static' + version;
 const dynamicCacheName = 'sitecache-dynamic' + version;
 
@@ -7,7 +7,7 @@ const assets = [
     "https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic",
     "https://cdn.rawgit.com/necolas/normalize.css/master/normalize.css",
     "https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css",
-    "/usdafood",
+    "/usdafood/",
     "/usdafood/index.html",
     "/usdafood/fallback.html",
     "/usdafood/css/index.css",
