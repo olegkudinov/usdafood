@@ -1,4 +1,4 @@
-const version = 1;
+const version = 2;
 const staticCacheName = 'sitecache-static' + version;
 const dynamicCacheName = 'sitecache-dynamic' + version;
 
@@ -65,7 +65,7 @@ self.addEventListener('fetch', evt => {
             });
           }).catch(() => {
             if(evt.request.url.indexOf('.html') > -1){
-              return caches.match('/pages/fallback.html');
+              return caches.match('/usdafood/fallback.html');
             } 
           })
         );
