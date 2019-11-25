@@ -23,8 +23,8 @@ function Formatters(resultElement) {
         
         let nutrients = '';
         data.nutrients.forEach(entry => {
-            let header = element.nutrient[0] === "*";
-            let unitless = element.content.unit === "header";
+            let header = entry.nutrient[0] === "*";
+            let unitless = entry.content.unit === "header";
             let row = '';
             let nutrient = entry.nutrient;
             if (header && unitless) {
@@ -32,9 +32,9 @@ function Formatters(resultElement) {
                 row = `<tr><td colspan="2"><strong>${nutrient}</strong></td></tr>`;
             } else if (header) {
                 nutrient = entry.nutrient.replace('**', '').replace('**', '');
-                row = `<tr><td><strong>${nutrient}</strong></td><td><strong>${_fmt(entry.content.value * factor)}</strong>&nbsp;<strong>${element.content.unit}</strong></td></tr>`;
+                row = `<tr><td><strong>${nutrient}</strong></td><td><strong>${_fmt(entry.content.value * factor)}</strong>&nbsp;<strong>${entry.content.unit}</strong></td></tr>`;
             } else {
-                row = `<tr><td><em>${nutrient}</em></td><td><strong>${_fmt(entry.content.value * factor)}</strong>&nbsp;<strong>${element.content.unit}</strong></td></tr>`;
+                row = `<tr><td><em>${nutrient}</em></td><td><strong>${_fmt(entry.content.value * factor)}</strong>&nbsp;<strong>${entry.content.unit}</strong></td></tr>`;
             }
             nutrients += row;
         });
