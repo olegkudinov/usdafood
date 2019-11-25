@@ -1,10 +1,8 @@
 function Formatters(resultElement) {
 
-    let _fmt = function(value){
-        return Math.round(value * 100)/100;
-    }
+    const _fmt = value => Math.round(value * 100)/100;
 
-    let _buildNutientHtml = function (data, mutiplicator, measure) {
+    let _buildNutientHtml = (data, mutiplicator, measure) => {
         let _factorCaption = "x " + (mutiplicator == 10 ? 1 : mutiplicator + 1);
         const byCalories = measure === 'calories';
         const byOunces = measure === 'ounces';
@@ -23,8 +21,8 @@ function Formatters(resultElement) {
         
         let nutrients = '';
         data.nutrients.forEach(entry => {
-            let header = entry.nutrient[0] === "*";
-            let unitless = entry.content.unit === "header";
+            const header = entry.nutrient[0] === "*";
+            const unitless = entry.content.unit === "header";
             let row = '';
             let nutrient = entry.nutrient;
             if (header && unitless) {
@@ -33,25 +31,19 @@ function Formatters(resultElement) {
             } else if (header) {
                 nutrient = entry.nutrient.replace('**', '').replace('**', '');
                 row = `<tr><td><strong>${nutrient}</strong></td><td><strong>${_fmt(entry.content.value * factor)}</strong>&nbsp;<strong>${entry.content.unit}</strong></td></tr>`;
-            } else {
+            } else
                 row = `<tr><td><em>${nutrient}</em></td><td><strong>${_fmt(entry.content.value * factor)}</strong>&nbsp;<strong>${entry.content.unit}</strong></td></tr>`;
-            }
             nutrients += row;
         });
     
         const weightUS = data.weight.value / 100 * 3.5274;
-        let weightStr = _fmt(data.weight.value * factor) + '&nbsp;' + data.weight.unit + '&nbsp;/&nbsp;' + _fmt(weightUS * factor) + '&nbsp;oz';
-        if (byOunces) {
-            weightStr = _fmt(weightUS * factor) + '&nbsp;oz' + '&nbsp;/&nbsp;' + _fmt(data.weight.value * factor) + data.weight.unit; 
-        }
+        let weightStr = `${_fmt(data.weight.value * factor)}&nbsp;${data.weight.unit}&nbsp;&nbsp;${_fmt(weightUS * factor)}&nbsp;oz`;
+        if (byOunces)
+            weightStr = `${_fmt(weightUS * factor)}&nbsp;oz&nbsp;&nbsp;${_fmt(data.weight.value * factor)}${data.weight.unit}`; 
     
-        let totals = `<div><em>Weight:</em><strong> ${weightStr}</strong></div>
-            <div><em>Energy:</em><strong> ${fmt(data.energy.value * factor)} ${data.energy.unit} </strong></div>`;
-    
-        if (byCalories) {
-            totals = `<div><em>Energy:</em><strong> ${_fmt(data.energy.value * factor)} ${data.energy.unit} </strong></div>
-                <div><em>Weight:</em><strong> ${weightStr}</strong></div>`;
-        }
+        let totals = `<div><em>Weight:</em><strong>${weightStr}</strong></div><div><em>Energy:</em><strong>${fmt(data.energy.value * factor)}${data.energy.unit}</strong></div>`;
+        if (byCalories)
+            totals = `<div><em>Energy:</em><strong> ${_fmt(data.energy.value * factor)}${data.energy.unit}</strong></div><div><em>Weight:</em><strong>${weightStr}</strong></div>`;
 
         const result = `
         <div>
