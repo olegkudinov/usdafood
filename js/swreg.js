@@ -10,13 +10,10 @@ const installButton = document.querySelector("#install");
 
 async function install(evt) {
     evt.preventDefault();
+    installButton.classList.remove('invisible');
     if(_prompter !== null) {
         _prompter.prompt();
-        _prompter.userChoice.then(choice => {
-            console.log('installation - user choice', choice);
-            if(choice.outcome === 'accepted')
-                installButton.classList.remove('invisible');
-        });
+        _prompter.userChoice.then(choice => console.log('installation - user choice', choice));
     }
     _prompter = null;
 }
