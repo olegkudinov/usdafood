@@ -15,8 +15,8 @@ async function install(evt) {
         _prompter.prompt();
         _prompter.userChoice.then(choice => {
             console.log('installation - user choice', choice);
-            //if(choice === 'accepted')
-            //    installButton.classList.add('invisible');
+            if(choice !== 'accepted')
+                installButton.classList.remove('invisible');
         }); 
     }
     _prompter = null;
