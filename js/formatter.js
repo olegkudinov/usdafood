@@ -8,13 +8,11 @@ function Formatters(resultElement) {
         let _factorCaption = "x " + (mutiplicator == 10 ? 1 : mutiplicator + 1);
         const byCalories = measure === 'calories';
         const byOunces = measure === 'ounces';
-        let _baseCaption;
+        let _baseCaption = 'By Grams';
         if(byCalories)
             _baseCaption = 'By Calories';
         else if(byOunces)
             _baseCaption = 'By Ounces';
-        else 
-            _baseCaption = 'By Grams';
 
         // original measure in 100 grams
         let factor = mutiplicator;
@@ -54,14 +52,33 @@ function Formatters(resultElement) {
             totals = `<div><em>Energy:</em><strong> ${_fmt(data.energy.value * factor)} ${data.energy.unit} </strong></div>
                 <div><em>Weight:</em><strong> ${weightStr}</strong></div>`;
         }
-        
-    
+
+        const result = `
+        <div>
+           <strong>${data.foodName}&nbsp;&nbsp;&nbsp;</strong>
+        </div>
+        <div>
+           <button id='toggler' onclick='app.toggleBase()'>${_baseCaption}</button>
+           <button id='multiplier' onclick='app.multiply()'>${_factorCaption}</button>
+        </div>
+        ${totals}        
+        <table>
+            <thead>
+                <th>Nutrition</th>
+                <th>Content</th>
+            </thead>
+            <tbody>
+                ${nutrients}
+            </tbody>
+        </table>`;
+
         resultElement.innerHTML = result;
     }
 
     let foodHtml = data => {
         let result = '';
         data.forEach(entry => result += `<tr><td>${entry.name}</td><td><button onclick='app.getNutrientsFor("${entry.id}")'>Nutrients</button></td></tr>`);
+        return result;
     };
 
     let _buildFoodHtml = data => {
