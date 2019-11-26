@@ -41,7 +41,7 @@ function Formatters(resultElement) {
         if (byOunces)
             weightStr = `${_fmt(weightUS * factor)}&nbsp;oz&nbsp;&nbsp;${_fmt(data.weight.value * factor)}${data.weight.unit}`; 
     
-        let totals = `<div><em>Weight:</em><strong>${weightStr}</strong></div><div><em>Energy:</em><strong>${fmt(data.energy.value * factor)}${data.energy.unit}</strong></div>`;
+        let totals = `<div><em>Weight:</em><strong>${weightStr}</strong></div><div><em>Energy:</em><strong>${_fmt(data.energy.value * factor)}${data.energy.unit}</strong></div>`;
         if (byCalories)
             totals = `<div><em>Energy:</em><strong> ${_fmt(data.energy.value * factor)}${data.energy.unit}</strong></div><div><em>Weight:</em><strong>${weightStr}</strong></div>`;
 
