@@ -88,7 +88,7 @@ const app = (function (window) {
     };
 
     button.addEventListener('click', function () {
-        _startRequest('/api/foods/' + input.value, true);
+        _startRequest('/api/foods/' + input.value, false);
     });
 
     input.addEventListener("keyup", function (event) {
