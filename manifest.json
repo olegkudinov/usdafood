@@ -1,19 +1,19 @@
 {
     "name": "USDA Food Search",
     "short_name": "Food",
-    "start_url": "/usdafood/",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#FFE9D2", 
     "theme_color": "#FFE1C4",
     "orientation": "portrait-primary",
     "icons": [
       {
-        "src": "/usdafood/img/icons/icon-192x192.png",
+        "src": "/img/icons/icon-192x192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "/usdafood/img/icons/icon-512x512.png",
+        "src": "/img/icons/icon-512x512.png",
         "type": "image/png",
         "sizes": "512x512"
       }

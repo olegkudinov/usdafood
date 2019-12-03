@@ -7,14 +7,14 @@ const assets = [
     "https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic",
     "https://cdn.rawgit.com/necolas/normalize.css/master/normalize.css",
     "https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css",
-    "/usdafood/",
-    "/usdafood/index.html",
-    "/usdafood/fallback.html",
-    "/usdafood/css/index.css",
-    "/usdafood/js/underscore-min.js",
-    "/usdafood/js/request.js",
-    "/usdafood/js/formatter.js",
-    "/usdafood/js/app.js"
+    "/",
+    "/index.html",
+    "/pages/fallback.html",
+    "/css/index.css",
+    "/js/underscore-min.js",
+    "/js/request.js",
+    "/js/formatter.js",
+    "/js/app.js"
 ];
 
 const limitCache = (name, size) => {
@@ -65,7 +65,7 @@ self.addEventListener('fetch', evt => {
             });
           }).catch(() => {
             if(evt.request.url.indexOf('.html') > -1){
-              return caches.match('/usdafood/fallback.html');
+              return caches.match('/pages/fallback.html');
             } 
           })
         );
